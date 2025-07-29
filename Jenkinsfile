@@ -1,35 +1,18 @@
 pipeline {
-  agent any
+    agent any
 
-  environment {
-    IMAGE_NAME = 'my-webapp'
-    KUBECONFIG = '/var/lib/jenkins/.kube/config'
-  }
-
-  stages {
-    stage('Clone Repo') {
-      steps {
-        checkout scm
-      }
+    environment {
+        IMAGE_NAME = 'my-webapp'
+        KUBECONFIG = '/var/lib/jenkins/.kube/config'
     }
 
-    stage('Build Docker Image') {
-      steps {
-        sh 'docker build -t my-webapp:latest .'
-      }
+    stages {
+        stage('Deploy to K3s') {
+            steps {
+                sh 'kubectl apply -f deployment.yaml'
+                sh 'kubectl apply -f service.yaml'
+            }
+        }
     }
-
-    stage('Delete Existing Deployment') {
-      steps {
-        sh 'kubectl delete deployment my-webapp || true'
-      }
-    }
-
-    stage('Deploy to K3s') {
-      steps {
-        sh 'kubectl apply -f k8s/deployment.yaml'
-        sh 'kubectl apply -f k8s/service.yaml'
-      }
-    }
-  }
 }
+
