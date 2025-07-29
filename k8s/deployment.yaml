@@ -14,8 +14,7 @@ spec:
     spec:
       containers:
       - name: my-webapp
-        image: vallakki/my-webapp:latest  # Replace with your real Docker Hub username
-        imagePullPolicy: Always
+        image: my-webapp:latest  # <-- use local image tag
         ports:
         - containerPort: 80
 
