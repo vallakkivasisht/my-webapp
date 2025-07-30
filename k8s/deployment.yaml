@@ -14,7 +14,10 @@ spec:
     spec:
       containers:
       - name: my-webapp
-        image: my-webapp:latest  # <-- use local image tag
+        image: ghcr.io/vallakkivasisht/my-webapp:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
+      imagePullSecrets:
+      - name: ghcr-secret
 
